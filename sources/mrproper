@@ -1,0 +1,22 @@
+if [ -z "$LFS" ]||[ -z "$LFS_TGT" ];then
+	echo "Alguma das variaveis não foi definida por favor verifique a variavel LFS e LFS_TGT"
+	exit 1
+fi
+tratamento_de_erro(){
+	echo "Erro detectado!"
+	echo "Comando: \"$BASH_COMMAND\""
+	echo "Na linha: $LINENO"
+	echo "Código de erro: $?"
+	echo "No script $(basename $0)"
+    	exit 1
+}
+trap tratamento_de_erro ERR
+tempo_estimado=$(echo "$SBU * 0.1"|bc)
+echo "Este processo deve demorar 0.1 SBU $tempo_estimado"
+sleep 3
+tar -xvf linux-6.10.5.tar.xz
+cd linux-6.10.5
+make mrproper
+make headers
+find usr/include -type f ! -name '*.h' -delete
+cp -rv usr/include $LFS/usr
