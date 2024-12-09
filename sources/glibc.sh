@@ -52,3 +52,9 @@ echo "Init install"
 sleep 3
 make DESTDIR=$LFS install
 sed '/RTLDLIST=/s@/usr@@g' -i $LFS/usr/bin/ldd
+echo "Iniciando um teste do glibc"
+sleep 2
+echo 'int main(){}' | $LFS_TGT-gcc -xc -
+readelf -l a.out | grep ld-linux
+echo "Se obteve uma saida semelhante a [Requesting program interpreter: /lib64/ld-linux-x86-64.so.2] está tudo certo"
+rm -v a.out
