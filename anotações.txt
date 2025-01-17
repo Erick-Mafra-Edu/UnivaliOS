@@ -1,0 +1,2 @@
+Eu tive um problema ao entrar em chroot para compilar
+o get text tive que compilar zlib antes da hora
